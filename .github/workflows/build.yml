@@ -8,6 +8,11 @@ on:
   pull_request:
     branches: [ main, master ]
 
+# Add permissions to the GITHUB_TOKEN
+permissions:
+  contents: write
+  packages: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,8 +31,35 @@ jobs:
         run: |
           mkdir -p build/outputs/module
           
+      - name: Create module.prop file
+        run: |
+          echo "id=monet-theming-bridge" > module.prop
+          echo "name=Monet Theming Bridge" >> module.prop
+          echo "version=v1.0.2" >> module.prop
+          echo "versionCode=102" >> module.prop
+          echo "author=TheSakshamSingla" >> module.prop
+          echo "description=Bridge for Android's Monet theming system to web UIs" >> module.prop
+          
+      - name: Create install.sh file
+        run: |
+          echo "#!/system/bin/sh" > install.sh
+          echo "# Monet Theming Bridge installation script" >> install.sh
+          echo "# This is a placeholder for the actual installation script" >> install.sh
+          chmod +x install.sh
+          
       - name: Create module zip
         run: |
+          mkdir -p src/main/java
+          mkdir -p src/main/cpp
+          mkdir -p web
+          mkdir -p examples
+          
+          # Create empty files to ensure directories exist in zip
+          touch src/main/java/.gitkeep
+          touch src/main/cpp/.gitkeep
+          touch web/.gitkeep
+          touch examples/.gitkeep
+          
           zip -r build/outputs/module/monet-theming-bridge.zip \
             README.md \
             LICENSE \
@@ -48,6 +80,8 @@ jobs:
     needs: build
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/download-artifact@v4
         with:
