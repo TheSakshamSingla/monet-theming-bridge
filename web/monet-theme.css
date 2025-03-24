@@ -1,0 +1,206 @@
+/**
+ * Monet Theming Bridge - CSS Utilities
+ * 
+ * This CSS file provides utility classes for using Monet colors in web UIs.
+ * It relies on CSS variables set by the monet-bridge.js library.
+ */
+
+:root {
+  /* Default fallback values - these will be overridden by JS */
+  --monet-accent1_10: #000000;
+  --monet-accent1_50: #6750A4;
+  --monet-accent1_100: #B69DF8;
+  --monet-accent1_200: #EADDFF;
+  --monet-accent1_300: #D0BCFF;
+  --monet-accent1_400: #B69DF8;
+  --monet-accent1_500: #9A82DB;
+  --monet-accent1_600: #7F67BE;
+  --monet-accent1_700: #6750A4;
+  --monet-accent1_800: #4F378B;
+  --monet-accent1_900: #381E72;
+  --monet-accent2_10: #291800;
+  --monet-accent2_50: #9C4146;
+  --monet-accent2_100: #FFB4AB;
+  
+  /* Semantic color mapping */
+  --monet-primary: var(--monet-accent1_700);
+  --monet-primary-container: var(--monet-accent1_100);
+  --monet-on-primary: #FFFFFF;
+  --monet-on-primary-container: var(--monet-accent1_900);
+  --monet-secondary: var(--monet-accent2_50);
+  --monet-secondary-container: var(--monet-accent2_100);
+  --monet-on-secondary: #FFFFFF;
+  --monet-on-secondary-container: var(--monet-accent2_10);
+  --monet-background: #FFFBFE;
+  --monet-on-background: #1C1B1F;
+  --monet-surface: #FFFBFE;
+  --monet-on-surface: #1C1B1F;
+  --monet-surface-variant: #E7E0EC;
+  --monet-on-surface-variant: #49454F;
+  --monet-outline: #79747E;
+  --monet-error: #B3261E;
+  --monet-on-error: #FFFFFF;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --monet-background: #1C1B1F;
+    --monet-on-background: #E6E1E5;
+    --monet-surface: #1C1B1F;
+    --monet-on-surface: #E6E1E5;
+    --monet-surface-variant: #49454F;
+    --monet-on-surface-variant: #CAC4D0;
+    --monet-outline: #938F99;
+  }
+}
+
+/* Utility classes for background colors */
+.monet-bg-primary {
+  background-color: var(--monet-primary);
+  color: var(--monet-on-primary);
+}
+
+.monet-bg-primary-container {
+  background-color: var(--monet-primary-container);
+  color: var(--monet-on-primary-container);
+}
+
+.monet-bg-secondary {
+  background-color: var(--monet-secondary);
+  color: var(--monet-on-secondary);
+}
+
+.monet-bg-secondary-container {
+  background-color: var(--monet-secondary-container);
+  color: var(--monet-on-secondary-container);
+}
+
+.monet-bg-surface {
+  background-color: var(--monet-surface);
+  color: var(--monet-on-surface);
+}
+
+.monet-bg-surface-variant {
+  background-color: var(--monet-surface-variant);
+  color: var(--monet-on-surface-variant);
+}
+
+/* Utility classes for text colors */
+.monet-text-primary {
+  color: var(--monet-primary);
+}
+
+.monet-text-secondary {
+  color: var(--monet-secondary);
+}
+
+.monet-text-on-surface {
+  color: var(--monet-on-surface);
+}
+
+.monet-text-on-surface-variant {
+  color: var(--monet-on-surface-variant);
+}
+
+/* Button styles */
+.monet-button {
+  background-color: var(--monet-primary);
+  color: var(--monet-on-primary);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.monet-button:hover {
+  background-color: var(--monet-accent1_600);
+}
+
+.monet-button-outlined {
+  background-color: transparent;
+  color: var(--monet-primary);
+  border: 1px solid var(--monet-outline);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.monet-button-outlined:hover {
+  background-color: rgba(103, 80, 164, 0.08);
+}
+
+/* Card styles */
+.monet-card {
+  background-color: var(--monet-surface);
+  color: var(--monet-on-surface);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* Input styles */
+.monet-input {
+  background-color: var(--monet-surface-variant);
+  color: var(--monet-on-surface-variant);
+  border: 1px solid var(--monet-outline);
+  border-radius: 4px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.monet-input:focus {
+  border-color: var(--monet-primary);
+}
+
+/* Switch styles */
+.monet-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+
+.monet-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.monet-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--monet-surface-variant);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.monet-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--monet-on-surface-variant);
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.monet-switch input:checked + .monet-switch-slider {
+  background-color: var(--monet-primary);
+}
+
+.monet-switch input:checked + .monet-switch-slider:before {
+  transform: translateX(16px);
+  background-color: var(--monet-on-primary);
+}

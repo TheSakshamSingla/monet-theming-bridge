@@ -1,0 +1,7 @@
+id=monet-theming-bridge
+name=Monet Theming Bridge
+version=v1.0.0
+versionCode=1
+author=MonetBridge
+description=Bridges Android's Monet theming with web UIs in sandboxed environments
+updateJson=https://raw.githubusercontent.com/your-username/monet-theming-bridge/main/update.json

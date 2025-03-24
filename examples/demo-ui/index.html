@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monet Theming Bridge Demo</title>
+  <link rel="stylesheet" href="../../web/monet-theme.css">
+  <style>
+    body {
+      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--monet-background);
+      color: var(--monet-on-background);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .header h1 {
+      margin-bottom: 8px;
+    }
+    
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    
+    .color-swatch {
+      height: 80px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .color-swatch:hover {
+      transform: scale(1.05);
+    }
+    
+    .components-demo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    
+    @media (max-width: 600px) {
+      .components-demo {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .component-section {
+      margin-bottom: 24px;
+    }
+    
+    .component-section h3 {
+      margin-bottom: 16px;
+      color: var(--monet-primary);
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    .switch-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    
+    .status-section {
+      background-color: var(--monet-surface-variant);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 32px;
+    }
+    
+    .status-section pre {
+      background-color: var(--monet-surface);
+      border-radius: 4px;
+      padding: 12px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle">
+    <label class="monet-switch">
+      <input type="checkbox" id="theme-toggle-input">
+      <span class="monet-switch-slider"></span>
+    </label>
+    <span id="theme-label">Dark Mode</span>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h1 class="monet-text-primary">Monet Theming Bridge</h1>
+      <p>Dynamic Material You colors for your web UI</p>
+    </div>
+    
+    <div class="monet-card">
+      <h2 class="monet-text-primary">Color Palette</h2>
+      <p>These colors are dynamically extracted from your device's wallpaper using Android's Monet theming system.</p>
+      
+      <div class="color-palette" id="color-palette">
+        <!-- Color swatches will be added here dynamically -->
+      </div>
+    </div>
+    
+    <div class="components-demo">
+      <div class="monet-card">
+        <h2 class="monet-text-primary">UI Components</h2>
+        
+        <div class="component-section">
+          <h3>Buttons</h3>
+          <div class="button-group">
+            <button class="monet-button">Primary Button</button>
+            <button class="monet-button-outlined">Outlined Button</button>
+          </div>
+        </div>
+        
+        <div class="component-section">
+          <h3>Form Controls</h3>
+          <div class="form-group">
+            <label for="text-input">Text Input</label>
+            <input type="text" id="text-input" class="monet-input" placeholder="Enter text...">
+          </div>
+          
+          <div class="switch-group">
+            <span>Enable Feature 1</span>
+            <label class="monet-switch">
+              <input type="checkbox" checked>
+              <span class="monet-switch-slider"></span>
+            </label>
+          </div>
+          
+          <div class="switch-group">
+            <span>Enable Feature 2</span>
+            <label class="monet-switch">
+              <input type="checkbox">
+              <span class="monet-switch-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="monet-card">
+        <h2 class="monet-text-primary">How It Works</h2>
+        <p>The Monet Theming Bridge extracts Material You colors from Android 12+ and makes them available to web UIs running in sandboxed environments.</p>
+        
+        <ol>
+          <li>Native module extracts colors from Android system</li>
+          <li>Colors are saved to a JSON file</li>
+          <li>Web UI reads the JSON file using fetch API</li>
+          <li>Colors are applied to CSS variables</li>
+          <li>UI components use these variables for styling</li>
+        </ol>
+        
+        <p class="monet-text-primary">This enables seamless integration with Android's dynamic theming system!</p>
+      </div>
+    </div>
+    
+    <div class="status-section">
+      <h2 class="monet-text-primary">Status</h2>
+      <div id="status-message">Initializing Monet Bridge...</div>
+      <h3>Current Colors:</h3>
+      <pre id="color-json">Loading...</pre>
+    </div>
+  </div>
+
+  <script src="../../web/monet-bridge.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const statusMessage = document.getElementById('status-message');
+      const colorJson = document.getElementById('color-json');
+      const colorPalette = document.getElementById('color-palette');
+      const themeToggle = document.getElementById('theme-toggle-input');
+      const themeLabel = document.getElementById('theme-label');
+      
+      // Check if dark mode is preferred
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      themeToggle.checked = prefersDarkMode;
+      updateThemeLabel();
+      
+      // Initialize the Monet Bridge
+      const monetBridge = new MonetBridge({
+        refreshInterval: 30000,
+        applyToCssVars: true,
+        onColorsLoaded: (colors) => {
+          statusMessage.textContent = 'Monet colors loaded successfully!';
+          colorJson.textContent = JSON.stringify(colors, null, 2);
+          
+          // Update color swatches
+          updateColorPalette(colors);
+        },
+        onError: (error) => {
+          statusMessage.textContent = `Error: ${error.message}`;
+          statusMessage.style.color = 'var(--monet-error)';
+        }
+      });
+      
+      // Initialize the bridge
+      monetBridge.init().then(success => {
+        if (success) {
+          statusMessage.textContent = 'Monet Bridge initialized successfully';
+        } else {
+          statusMessage.textContent = 'Failed to initialize Monet Bridge, using fallback colors';
+          statusMessage.style.color = 'var(--monet-error)';
+          
+          // Still update the UI with fallback colors
+          updateColorPalette(monetBridge.getAllColors());
+          colorJson.textContent = JSON.stringify(monetBridge.getAllColors(), null, 2);
+        }
+      });
+      
+      // Handle theme toggle
+      themeToggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark-theme', themeToggle.checked);
+        updateThemeLabel();
+      });
+      
+      // Update color palette display
+      function updateColorPalette(colors) {
+        colorPalette.innerHTML = '';
+        
+        Object.entries(colors).forEach(([name, value]) => {
+          const swatch = document.createElement('div');
+          swatch.className = 'color-swatch';
+          swatch.style.backgroundColor = value;
+          
+          // Determine if text should be light or dark based on background color
+          const rgb = hexToRgb(value);
+          const brightness = calculateBrightness(rgb.r, rgb.g, rgb.b);
+          swatch.style.color = brightness > 128 ? '#000000' : '#FFFFFF';
+          
+          swatch.textContent = name;
+          swatch.title = `${name}: ${value}`;
+          
+          // Copy color value on click
+          swatch.addEventListener('click', () => {
+            navigator.clipboard.writeText(value)
+              .then(() => {
+                const originalText = swatch.textContent;
+                swatch.textContent = 'Copied!';
+                setTimeout(() => {
+                  swatch.textContent = originalText;
+                }, 1000);
+              });
+          });
+          
+          colorPalette.appendChild(swatch);
+        });
+      }
+      
+      // Helper function to convert hex to RGB
+      function hexToRgb(hex) {
+        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+        
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : { r: 0, g: 0, b: 0 };
+      }
+      
+      // Calculate brightness value
+      function calculateBrightness(r, g, b) {
+        return (r * 299 + g * 587 + b * 114) / 1000;
+      }
+      
+      // Update theme toggle label
+      function updateThemeLabel() {
+        themeLabel.textContent = themeToggle.checked ? 'Dark Mode' : 'Light Mode';
+      }
+      
+      // Clean up when page is unloaded
+      window.addEventListener('beforeunload', () => {
+        monetBridge.destroy();
+      });
+    });
+  </script>
+</body>
+</html>
